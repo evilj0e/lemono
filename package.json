@@ -2,7 +2,7 @@
     "name": "pomodoro",
     "version": "0.0.1",
     "description": "Simple pomodoro timer on Electron",
-    "main": "index.js",
+    "main": "./build/index.js",
     "scripts": {
         "build": "tsc && electron-packager . Pomodoro --all",
         "watch": "tsc -w",
