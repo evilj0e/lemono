@@ -1,31 +1,31 @@
 {
-    "name": "pomodoro",
-    "version": "0.0.1",
-    "description": "Simple pomodoro timer on Electron",
-    "main": "./build/index.js",
-    "scripts": {
-        "build": "tsc && electron-packager . Pomodoro --all",
-        "watch": "tsc -w",
-        "lint": "tslint -c tslint.json -p tsconfig.json",
-        "start": "tsc && electron ./build/index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/evilj0e/pomodoro.git"
-    },
-    "author": "Anton Konev <info@antonkonev.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/evilj0e/pomodoro/issues"
-    },
-    "homepage": "https://github.com/evilj0e/pomodoro#readme",
-    "devDependencies": {
-        "electron": "^7.0.1",
-        "electron-packager": "^14.1.0",
-        "prettier": "^1.18.2",
-        "tslint": "^6.0.0-beta0",
-        "tslint-config-prettier": "^1.18.0",
-        "tslint-plugin-prettier": "^2.0.1",
-        "typescript": "^3.6.4"
-    }
+  "name": "lemono",
+  "version": "1.0.0",
+  "description": "Simple lemono timer on Electron",
+  "main": "./build/index.js",
+  "scripts": {
+    "build": "tsc && electron-packager . Lemono --all",
+    "watch": "tsc -w",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "start": "tsc && electron ./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evilj0e/lemono.git"
+  },
+  "author": "Anton Konev <info@antonkonev.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/evilj0e/lemono/issues"
+  },
+  "homepage": "https://github.com/evilj0e/lemono#readme",
+  "devDependencies": {
+    "electron": "^7.0.1",
+    "electron-packager": "^14.1.0",
+    "prettier": "^1.18.2",
+    "tslint": "^6.0.0-beta0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.6.4"
+  }
 }
