@@ -45,7 +45,7 @@ class Lemono {
         label: `Start ${this.currentPeriod}`,
         click: () => this.start()
       },
-      { label: "Finish", click: () => this.stop() }
+      { label: "Stop", click: () => this.stop() }
     ];
 
     if (isRunning) {
@@ -54,7 +54,7 @@ class Lemono {
           label: `Skip ${this.currentPeriod}`,
           click: () => this.skip()
         },
-        { label: "Finish", click: () => this.stop() }
+        { label: "Stop", click: () => this.stop() }
       ];
     }
 
