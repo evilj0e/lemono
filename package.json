@@ -4,7 +4,7 @@
   "description": "Simple lemono timer on Electron",
   "main": "./build/index.js",
   "scripts": {
-    "build": "tsc && electron-packager . Lemono --all",
+    "build": "tsc && electron-packager . Lemono --platform=darwin --arch=x64",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "start": "tsc && electron ./build/index.js"
