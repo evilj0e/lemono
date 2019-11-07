@@ -1,9 +1,10 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "noImplicitAny": true,
-        "outDir": "build",
-        "baseUrl": "."
-    },
-    "include": ["src/**/*"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "build",
+    "baseUrl": ".",
+    "target": "es5"
+  },
+  "include": ["src/**/*"]
 }
