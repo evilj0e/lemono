@@ -1,21 +1,20 @@
-import { ITime } from "./index.types";
+import { Period } from "./index.types";
 
 export interface IIcons {
-  // @TODO update types to keys from ITime
-  work: any;
-  coffee: any;
-  social: any;
-  lunch: any;
-  default: any;
+  [Period.Work]: string;
+  [Period.Coffee]: string;
+  [Period.Social]: string;
+  [Period.Lunch]: string;
+  default: string;
 }
 
 export interface ITimings {
-  work: number;
-  coffee: number;
-  social: number;
-  lunch: number;
+  [Period.Work]: number;
+  [Period.Coffee]: number;
+  [Period.Social]: number;
+  [Period.Lunch]: number;
 }
 
-export type IPeriods = ITime[];
+export type IPeriods = Period[];
 
 export type IMenuItemsConctructor = () => Electron.MenuItemConstructorOptions[];

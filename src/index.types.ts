@@ -1,1 +1,6 @@
-export type ITime = "work" | "coffee" | "social" | "lunch";
+export enum Period {
+  Work = "work",
+  Coffee = "coffee",
+  Social = "social",
+  Lunch = "lunch"
+}

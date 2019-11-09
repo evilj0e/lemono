@@ -1,23 +1,24 @@
 import * as path from "path";
 
 import { IIcons, ITimings, IPeriods } from "./constants.types";
+import { Period } from "./index.types";
 
 const ASSETS = path.join(__dirname, "../assets");
 
 export const ICONS: IIcons = {
   default: path.join(ASSETS, "lemon.png"),
-  work: path.join(ASSETS, "work.png"),
-  coffee: path.join(ASSETS, "coffee.png"),
-  social: path.join(ASSETS, "social.png"),
-  lunch: path.join(ASSETS, "soup.png")
+  [Period.Work]: path.join(ASSETS, "work.png"),
+  [Period.Coffee]: path.join(ASSETS, "coffee.png"),
+  [Period.Social]: path.join(ASSETS, "social.png"),
+  [Period.Lunch]: path.join(ASSETS, "soup.png")
 };
 
 export const TIMINGS: ITimings = {
   // minutes
-  work: 25,
-  coffee: 5,
-  social: 15,
-  lunch: 60
+  [Period.Work]: 25,
+  [Period.Coffee]: 5,
+  [Period.Social]: 15,
+  [Period.Lunch]: 60
 };
 
 /*
@@ -25,48 +26,48 @@ For TARGET_AMOUNT_COUNT of work periods should be
 TARGET_AMOUNT_COUNT * 2 period of work and some kinds of pauses.
 */
 export const PERIODS: IPeriods = [
-  "work",
-  "coffee",
-  "work",
-  "coffee",
-  "work",
-  "coffee",
-  "work",
-  "social",
-  "work",
-  "coffee",
-  "work",
-  "lunch",
-  "work",
-  "social",
-  "work",
-  "coffee",
-  "work",
-  "social",
-  "work",
-  "coffee",
-  "work",
-  "lunch",
-  "work",
-  "coffee",
-  "work",
-  "coffee"
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Social,
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Lunch,
+  Period.Work,
+  Period.Social,
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Social,
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Lunch,
+  Period.Work,
+  Period.Coffee,
+  Period.Work,
+  Period.Coffee
 ];
 
 export const NOTIFICATIONS = {
-  coffee: {
+  [Period.Coffee]: {
     title: "Have a break",
     body: "How about a cup of coffee?"
   },
-  work: {
+  [Period.Work]: {
     title: "Time to work",
     body: "It's sad, but the job won't do itself."
   },
-  social: {
+  [Period.Social]: {
     title: "Time for socal life",
     body: "It's time to put likes on the instagram."
   },
-  lunch: {
+  [Period.Lunch]: {
     title: "Food fetish time",
     body: "Time for a little refreshment, I think."
   },

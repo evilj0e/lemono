@@ -1,8 +1,17 @@
-export type ITimerActions = "start" | "stop" | "skip" | "update";
+export enum TimerAction {
+  Start,
+  Stop,
+  Skip,
+  Update
+}
 
-export type ITimerType = "once" | "repeat" | "all";
+export enum TimerType {
+  Once,
+  Repeat,
+  All
+}
 
-export type ITimerCallback = (event: ITimerActions) => void;
+export type ITimerCallback = (event: TimerAction) => void;
 
 export interface ITimerEvents {
   [key: string]: Array<ITimerCallback>;

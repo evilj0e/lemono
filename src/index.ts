@@ -4,11 +4,12 @@ import Timer from "./timer";
 
 import { ICONS, PERIODS, TIMINGS, NOTIFICATIONS } from "./constants";
 
-import { ITime } from "./index.types";
+import { Period } from "./index.types";
+import { TimerAction, TimerType } from "./timer.types";
 
 class Lemono {
   private time: number = 0;
-  private state: boolean = false;
+  private isRunning: boolean = false;
   private periodIndex = 0;
   private timer: Timer;
   private tray: Electron.Tray;
@@ -19,7 +20,7 @@ class Lemono {
     this.renderMenu();
   }
 
-  get currentPeriod(): ITime {
+  get currentPeriod(): Period {
     return PERIODS[this.periodIndex];
   }
 
@@ -28,8 +29,7 @@ class Lemono {
   }
 
   get menu(): Electron.MenuItemConstructorOptions[] {
-    const isRunning = this.state;
-    const isInitialState = !this.state && !this.periodIndex && !this.time;
+    const isInitialState = !this.isRunning && !this.periodIndex && !this.time;
     const isFinished = this.currentPeriod === undefined;
 
     if (isFinished) {
@@ -44,7 +44,7 @@ class Lemono {
       { label: "Stop", click: () => this.stop() }
     ];
 
-    if (isRunning) {
+    if (this.isRunning) {
       actions = [
         {
           label: `Skip ${this.currentPeriod}`,
@@ -67,7 +67,7 @@ class Lemono {
   }
 
   get title(): string {
-    if (!this.state) {
+    if (!this.isRunning) {
       return "";
     }
 
@@ -83,44 +83,50 @@ class Lemono {
     return NOTIFICATIONS[this.currentPeriod || "default"];
   }
 
-  initTimer() {
+  initTimer(): void {
     this.timer = new Timer();
 
     this.timer
-      .on("start", this.onPeriodEnd.bind(this))
-      .on("stop", this.onPeriodEnd.bind(this))
-      .on("skip", this.onPeriodEnd.bind(this))
-      .on("update", this.onUpdate.bind(this));
+      .on(TimerAction.Start, this.onPeriodEnd.bind(this))
+      .on(TimerAction.Stop, this.onPeriodEnd.bind(this))
+      .on(TimerAction.Skip, this.onPeriodEnd.bind(this))
+      .on(TimerAction.Update, this.onUpdate.bind(this));
   }
 
-  renderTray() {
+  renderTray(): void {
     this.tray.setImage(
       this.currentPeriod ? ICONS[this.currentPeriod] : ICONS.default
     );
   }
 
-  renderMenu() {
+  renderMenu(): void {
     const menu = Menu.buildFromTemplate(this.menu);
 
     this.tray.setContextMenu(menu);
   }
 
-  renderTitle() {
-    this.tray.setTitle(this.title);
+  renderTitle(): void {
+    switch (process.platform) {
+      case "win32":
+        return this.tray.setToolTip(this.title);
+
+      case "darwin":
+        return this.tray.setTitle(this.title);
+    }
   }
 
-  renderNotification() {
+  renderNotification(): void {
     new Notification(this.notificationTitle).show();
   }
 
-  updateTime() {
+  updateTime(): void {
     this.time -= 1;
   }
 
-  onPeriodEnd() {
-    this.timer.stop("all");
+  onPeriodEnd(): void {
+    this.timer.stop(TimerType.All);
 
-    this.state = false;
+    this.isRunning = false;
     this.time = 0;
 
     this.periodIndex++;
@@ -131,47 +137,47 @@ class Lemono {
     this.renderNotification();
   }
 
-  onUpdate() {
+  onUpdate(): void {
     this.updateTime();
     this.renderTitle();
   }
 
-  start() {
+  start(): void {
     if (!this.time) {
       this.time = this.currentDelay;
     }
 
-    this.state = true;
+    this.isRunning = true;
     this.timer
-      .stop("all")
-      .repeat("update", 1000)
-      .once("start", (this.time + 1) * 1000);
+      .stop(TimerType.All)
+      .repeat(TimerAction.Update, 1000)
+      .once(TimerAction.Start, (this.time + 1) * 1000);
 
     this.renderTray();
     this.renderMenu();
   }
 
-  stop() {
-    this.state = false;
-    this.timer.stop("all");
+  stop(): void {
+    this.isRunning = false;
+    this.timer.stop(TimerType.All);
 
     this.renderTray();
     this.renderMenu();
   }
 
-  skip() {
+  skip(): void {
     this.onPeriodEnd();
     this.start();
   }
 
-  resume() {
+  resume(): void {
     this.start();
 
     this.renderTray();
     this.renderMenu();
   }
 
-  quit() {
+  quit(): void {
     app.quit();
   }
 }
