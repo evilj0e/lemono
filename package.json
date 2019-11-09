@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/evilj0e/lemono#readme",
   "devDependencies": {
-    "electron": "^7.0.1",
+    "electron": "^7.1.1",
     "electron-packager": "^14.1.0",
-    "prettier": "^1.18.2",
-    "tslint": "^6.0.0-beta0",
+    "prettier": "^1.19.0",
+    "tslint": "^6.0.0-beta1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   }
 }

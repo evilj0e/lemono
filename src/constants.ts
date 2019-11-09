@@ -52,3 +52,26 @@ export const PERIODS: IPeriods = [
   "work",
   "coffee"
 ];
+
+export const NOTIFICATIONS = {
+  coffee: {
+    title: "Have a break",
+    body: "How about a cup of coffee?"
+  },
+  work: {
+    title: "Time to work",
+    body: "It's sad, but the job won't do itself."
+  },
+  social: {
+    title: "Time for socal life",
+    body: "It's time to put likes on the instagram."
+  },
+  lunch: {
+    title: "Food fetish time",
+    body: "Time for a little refreshment, I think."
+  },
+  default: {
+    title: "You're great!",
+    body: " Have a rest! See you tomorrow!"
+  }
+};

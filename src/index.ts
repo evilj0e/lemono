@@ -2,7 +2,7 @@ import { app, Menu, Tray, Notification } from "electron";
 
 import Timer from "./timer";
 
-import { ICONS, PERIODS, TIMINGS } from "./constants";
+import { ICONS, PERIODS, TIMINGS, NOTIFICATIONS } from "./constants";
 
 import { ITime } from "./index.types";
 
@@ -14,13 +14,9 @@ class Lemono {
   private tray: Electron.Tray;
 
   constructor() {
-    this.init();
-
-    this.timer
-      .on("start", this.onPeriodEnd.bind(this))
-      .on("stop", this.onPeriodEnd.bind(this))
-      .on("skip", this.onPeriodEnd.bind(this))
-      .on("update", this.onUpdate.bind(this));
+    this.tray = new Tray(ICONS.default);
+    this.initTimer();
+    this.renderMenu();
   }
 
   get currentPeriod(): ITime {
@@ -84,40 +80,17 @@ class Lemono {
   }
 
   get notificationTitle(): Electron.NotificationConstructorOptions {
-    switch (this.currentPeriod) {
-      case "coffee":
-        return {
-          title: "Have a break",
-          body: "How about a cup of coffee?"
-        };
-      case "work":
-        return {
-          title: "Time to work",
-          body: "It's sad, but the job won't do itself."
-        };
-      case "social":
-        return {
-          title: "Time for socal life",
-          body: "It's time to put likes on the instagram."
-        };
-      case "lunch":
-        return {
-          title: "Food fetish time",
-          body: "Time for a little refreshment, I think."
-        };
-      default:
-        return {
-          title: "You're great!",
-          body: " Have a rest! See you tomorrow!"
-        };
-    }
+    return NOTIFICATIONS[this.currentPeriod || "default"];
   }
 
-  init() {
+  initTimer() {
     this.timer = new Timer();
-    this.tray = new Tray(ICONS.default);
 
-    this.renderMenu();
+    this.timer
+      .on("start", this.onPeriodEnd.bind(this))
+      .on("stop", this.onPeriodEnd.bind(this))
+      .on("skip", this.onPeriodEnd.bind(this))
+      .on("update", this.onUpdate.bind(this));
   }
 
   renderTray() {
@@ -127,11 +100,9 @@ class Lemono {
   }
 
   renderMenu() {
-    if (this.tray) {
-      const menu = Menu.buildFromTemplate(this.menu);
+    const menu = Menu.buildFromTemplate(this.menu);
 
-      this.tray.setContextMenu(menu);
-    }
+    this.tray.setContextMenu(menu);
   }
 
   renderTitle() {
