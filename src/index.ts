@@ -1,4 +1,4 @@
-import { app, Menu, Tray, Notification } from "electron";
+import { app, Menu, Tray, Notification, BrowserWindow } from "electron";
 
 import Timer from "./timer";
 
@@ -176,7 +176,22 @@ class Lemono {
   }
 }
 
-app.dock.hide();
 app.on("ready", () => {
+  switch (process.platform) {
+    case "win32": {
+      new BrowserWindow({
+        skipTaskbar: true,
+        show: false
+      }).hide();
+
+      break;
+    }
+    case "darwin": {
+      app.dock.hide();
+
+      break;
+    }
+  }
+
   new Lemono();
 });
