@@ -10,7 +10,7 @@ class Timer {
   private onceTimer: NodeJS.Timeout = null;
   private repeatTimer: NodeJS.Timeout = null;
 
-  on(event: TimerAction, cb: ITimerCallback): this {
+  on(event: TimerAction, cb: ITimerCallback): Timer {
     if (cb) {
       if (this.events[event] instanceof Array) {
         this.events[event].push(cb);
@@ -22,7 +22,7 @@ class Timer {
     return this;
   }
 
-  off(event: TimerAction): this {
+  off(event: TimerAction): Timer {
     this.stop(TimerType.All);
 
     delete this.events[event];
@@ -30,7 +30,7 @@ class Timer {
     return this;
   }
 
-  stop(type: TimerType): this {
+  stop(type: TimerType): Timer {
     if ([TimerType.All, TimerType.Once].includes(type)) {
       clearTimeout(this.onceTimer);
     }
@@ -42,7 +42,7 @@ class Timer {
     return this;
   }
 
-  once(event: TimerAction, delay: number = 0): this {
+  once(event: TimerAction, delay: number = 0): Timer {
     clearTimeout(this.onceTimer);
 
     const subscriptions = this.events[event];
@@ -56,7 +56,7 @@ class Timer {
     return this;
   }
 
-  repeat(event: TimerAction, delay: number = 1000): this {
+  repeat(event: TimerAction, delay: number = 1000): Timer {
     clearInterval(this.repeatTimer);
 
     const subscriptions = this.events[event];
