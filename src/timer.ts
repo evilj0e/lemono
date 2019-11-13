@@ -1,8 +1,8 @@
 import {
-  ITimerActions,
+  TimerAction,
   ITimerCallback,
   ITimerEvents,
-  ITimerType
+  TimerType
 } from "./timer.types";
 
 class Timer {
@@ -10,7 +10,7 @@ class Timer {
   private onceTimer: NodeJS.Timeout = null;
   private repeatTimer: NodeJS.Timeout = null;
 
-  on(event: ITimerActions, cb: ITimerCallback) {
+  on(event: TimerAction, cb: ITimerCallback): Timer {
     if (cb) {
       if (this.events[event] instanceof Array) {
         this.events[event].push(cb);
@@ -22,27 +22,27 @@ class Timer {
     return this;
   }
 
-  off(event: ITimerActions) {
-    this.stop("all");
+  off(event: TimerAction): Timer {
+    this.stop(TimerType.All);
 
     delete this.events[event];
 
     return this;
   }
 
-  stop(type: ITimerType) {
-    if (["all", "once"].includes(type)) {
+  stop(type: TimerType): Timer {
+    if ([TimerType.All, TimerType.Once].includes(type)) {
       clearTimeout(this.onceTimer);
     }
 
-    if (["all", "repeat"].includes(type)) {
+    if ([TimerType.All, TimerType.Repeat].includes(type)) {
       clearInterval(this.repeatTimer);
     }
 
     return this;
   }
 
-  once(event: ITimerActions, delay: number = 0) {
+  once(event: TimerAction, delay: number = 0): Timer {
     clearTimeout(this.onceTimer);
 
     const subscriptions = this.events[event];
@@ -56,7 +56,7 @@ class Timer {
     return this;
   }
 
-  repeat(event: ITimerActions, delay: number = 1000) {
+  repeat(event: TimerAction, delay: number = 1000): Timer {
     clearInterval(this.repeatTimer);
 
     const subscriptions = this.events[event];
